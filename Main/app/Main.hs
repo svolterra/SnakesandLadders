@@ -1,9 +1,11 @@
 module Main(main) where
 
 import Graphics.Gloss
+import Constants
+
 
 window :: Display
-window = InWindow "Snakes and Ladders" (1200, 600) (50, 50)
+window = InWindow "Snakes and Ladders" (screenWidth, screenHeight) (50, 50)
 
 background :: Color
 background = white
