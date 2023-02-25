@@ -40,19 +40,15 @@ initialGameState = (
     gameOver = 0
     })
 
-acc :: Int
-acc = 0
-
 determineGridColor :: [(Bool, Bool)] -> Picture
 determineGridColor head
-  | head == [(True, True)] = pictures [color green $ rectangleOutline, index]
-  | head == [(True, False)] = pictures [color green $ rectangleFilled, index]
-  | head == [(False, True)] = pictures [color blue $ rectangleFilled, index]
-  | otherwise = pictures [color black $ rectangleOutline, index]
+  | head == [(True, True)] = pictures [color green rectangleOutline]
+  | head == [(True, False)] = pictures [color green rectangleFilled]
+  | head == [(False, True)] = pictures [color blue rectangleFilled]
+  | otherwise = pictures [color black rectangleOutline]
    where
     rectangleOutline = rectangleWire cellWidth cellWidth
     rectangleFilled = rectangleSolid cellWidth cellWidth
-    index = Scale 0.1 0.1 $ Text (show $ (1 + acc))
 
 -- Define the rendering function
 gridPicture :: GameState -> Picture
@@ -61,8 +57,10 @@ gridPicture state = pictures
     translate (-100) (-250 + 25) $ pictures
       [ translate (fromIntegral x * cellWidth) (fromIntegral y * cellWidth) $
          determineGridColor currentHead
-        | x <- [0..gridSize-1], y <- [0..gridSize-1]
+          , rectangleWire cellWidth cellWidth
+          , translate ((-cellWidth/2) + 50 * fromIntegral x) (10 + 50 * fromIntegral y) $ scale 0.1 0.1 $ text (show (y * gridSize + x + 1))
       ]
+        | x <- [0..gridSize-1], y <- [0..gridSize-1]
   ] where
       currentState = grid state
       currentHead = head currentState
