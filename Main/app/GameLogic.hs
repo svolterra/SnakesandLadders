@@ -20,10 +20,12 @@ data GameState = GameState {
 
 -- For obstacles 1 means ladder, 2 means snakes
 data Obstacle = Obstacle {
+    exist::Bool,
     direction::Int,
     startPos::Int,
     endPos::Int
 } deriving (Eq, Show)
+
 
 obstacleList :: [Obstacle]
 obstacleList = [Obstacle 1 2 38]
