@@ -2,7 +2,6 @@ module GameLogic where
 
 import System.Random
 import Graphics.Gloss.Interface.Pure.Game
-import Constants (buttonPosX, buttonPosY)
 
 -- For turn:
 --     1 = player 1's turn

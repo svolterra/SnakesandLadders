@@ -1,8 +1,9 @@
 import Graphics.Gloss
 import Graphics.Gloss.Interface.IO.Game
-import System.Random
+import System.Random ( randomRIO )
 import Data.List
 import Constants
+import GHC.IO
 
 -- Define the grid size 
 gridSize :: Int
@@ -104,20 +105,14 @@ render (playerState, gameState) = Pictures [grid, button, result, text]
         result = rollResult
         text = resultText
 
--- Define the event handling function need to rewrite this entire thing
 handleEvent :: Event -> (PlayerState, GameState) -> (PlayerState, GameState)
 handleEvent (EventKey (MouseButton LeftButton) Down _ (x, y)) (playerState, gameState)
-  | x < 0 = (playerState, gameState) -- Clicked on the bar, do nothing
-  | otherwise = (playerState, (gameState { grid = grid' }))
-  where
-    w = fromIntegral gridSize * cellWidth
-    h = fromIntegral gridSize * cellWidth
-    col = floor $ (x + w/2) / cellWidth
-    row = floor $ (y + h/2) / cellWidth
-    grid' = take row (grid gameState) ++ [row''] ++ drop (row+1) (grid gameState)
-    row'' = take col (grid gameState !! row) ++ [(False, False)] ++ drop (col+1) (grid gameState !! row)
-    playerState' = playerAction playerState
-
+  | buttonClicked (round x, round y) = (playerState', gameState)
+  | otherwise = (playerState, gameState)
+  where 
+    playerState' = unsafePerformIO $ playerAction playerState
+    buttonClicked (x', y') = x' > left && x' < right && y' > bottom && y' < top
+    (left, right, bottom, top) = (buttonLeft, buttonRight, buttonBottom, buttonTop)
 handleEvent _ (playerState, gameState) = (playerState, gameState)
 
 playerAction :: PlayerState -> IO PlayerState
