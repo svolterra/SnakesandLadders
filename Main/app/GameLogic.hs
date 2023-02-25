@@ -28,7 +28,7 @@ data Obstacle = Obstacle {
 
 
 obstacleList :: [Obstacle]
-obstacleList = [Obstacle 1 2 38]
+obstacleList = [Obstacle False 1 2 38]
 
 
 initialGameState :: GameState

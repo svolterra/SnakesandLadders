@@ -22,11 +22,12 @@ data PlayerState = PlayerState {
 }
 
 -- Define the initial game state
-initialGameState :: GameState
-initialGameState = GameState {
+initialGameState :: (PlayerState, GameState)
+initialGameState = ((PlayerState {turn = 1, player1 = 0, player2 = 0}),
+    GameState {
     grid = replicate gridSize $ replicate gridSize (False, False),
     gameOver = 0
-}
+    })
 
 -- Define the rendering function
 gridPicture :: GameState -> Picture
@@ -50,31 +51,30 @@ buttonPicture = Pictures [
     where
         buttonText = "Press to Roll"
 
-render :: GameState -> Picture
-render state = Pictures [grid, button]
+render :: (PlayerState, GameState) -> Picture
+render (pState, gState) = Pictures [grid, button]
     where
-        grid = gridPicture state
+        grid = gridPicture gState
         button = buttonPicture
 
 -- Define the event handling function need to rewrite this entire thing
-handleEvent :: Event -> GameState -> PlayerState -> GameState
-handleEvent (EventKey (MouseButton LeftButton) Down _ (x, y)) gState pState
-  | x < 0 = gState -- Clicked on the bar, do nothing
-  | otherwise = gState { grid = grid' }
+handleEvent :: Event -> (PlayerState, GameState) -> (PlayerState, GameState)
+handleEvent (EventKey (MouseButton LeftButton) Down _ (x, y)) (pState, gState)
+  | x < 0 = (pState, gState) -- Clicked on the bar, do nothing
+  | otherwise = (pState, (gState { grid = grid' }))
   where
     col = floor $ (x + w/2) / cellWidth
     row = floor $ (y + h/2) / cellWidth
     grid' = take row (grid gState) ++ [row''] ++ drop (row+1) (grid gState)
-    row'' = take col (grid gState !! row) ++ [not (grid state !! row !! col)] ++ drop (col+1) (grid gState !! row)
-    cellState = playerAction(pState)
+    row'' = take col (grid gState !! row) ++ [(False, False)] ++ drop (col+1) (grid gState !! row)
+    pState' = playerAction pState
     w = fromIntegral gridSize * cellWidth
     h = fromIntegral gridSize * cellWidth
-handleEvent _ gstate pstate = gstate
+handleEvent _ (pState, gState) = (pState, gState)
 
 
 playerAction :: PlayerState -> IO PlayerState
 playerAction (PlayerState {turn = t, player1 = p1, player2 = p2}) = do
-    let gen = mkStdGen 4515
     rollDice <- randomRIO (1, 6)
     if t == 1
         then if (p1 + rollDice) >= 100
@@ -87,7 +87,7 @@ playerAction (PlayerState {turn = t, player1 = p1, player2 = p2}) = do
             else return PlayerState{turn = t, player1 = p1, player2 = p2}
 
 -- Define the update function
-update :: Float -> GameState -> GameState
+update :: Float -> (PlayerState, GameState) -> (PlayerState, GameState)
 update _ = id
 
 -- Define the main function
