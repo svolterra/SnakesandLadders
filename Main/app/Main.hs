@@ -45,10 +45,10 @@ acc = 0
 
 determineGridColor :: [(Bool, Bool)] -> Picture
 determineGridColor head
-  | head == [(True, True)] = pictures [color black $ rectangleOutline, index]
+  | head == [(True, True)] = pictures [color green $ rectangleOutline, index]
   | head == [(True, False)] = pictures [color green $ rectangleFilled, index]
   | head == [(False, True)] = pictures [color blue $ rectangleFilled, index]
-  | otherwise = pictures [color green $ rectangleOutline, index]
+  | otherwise = pictures [color black $ rectangleOutline, index]
    where
     rectangleOutline = rectangleWire cellWidth cellWidth
     rectangleFilled = rectangleSolid cellWidth cellWidth
