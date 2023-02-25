@@ -1,10 +1,10 @@
 module Constants where
 
 screenWidth :: Int 
-screenWidth = 1200
+screenWidth = 800
 
 screenHeight :: Int
-screenHeight = 1200
+screenHeight = 550
 
 buttonPanelWidth :: Int
 buttonPanelWidth = 200
@@ -20,3 +20,9 @@ startX  = 20
 
 startY :: Int
 startY  = 20
+
+buttonPosX :: Int
+buttonPosX = 2
+
+buttonPosY :: Int
+buttonPosY = 2
