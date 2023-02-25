@@ -1,6 +1,8 @@
 module GameLogic where
 
 import System.Random
+import Graphics.Gloss.Interface.Pure.Game
+import Constants (buttonPosX, buttonPosY)
 
 -- For turn:
 --     1 = player 1's turn
@@ -43,3 +45,6 @@ playerAction (GameState {turn = t, player1 = p1, player2 = p2, gameOver = o}) = 
                 then return GameState{turn = 1, player1 = p1, player2 = 100, gameOver = 1}
                 else return GameState{turn = 1, player1 = p1, player2 = p2 + rollDice, gameOver = 1}
             else return GameState{turn = t, player1 = p1, player2 = p2, gameOver = o}
+    
+
+
