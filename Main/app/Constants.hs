@@ -6,9 +6,6 @@ screenWidth = 800
 screenHeight :: Int
 screenHeight = 550
 
-buttonPanelWidth :: Int
-buttonPanelWidth = 200
-
 offsetX :: Int
 offsetX = 20
 
@@ -21,8 +18,20 @@ startX  = 20
 startY :: Int
 startY  = 20
 
-buttonPosX :: Int
-buttonPosX = 2
+buttonLeft :: Int
+buttonLeft = -250 
 
-buttonPosY :: Int
-buttonPosY = 2
+buttonRight :: Int
+buttonRight = buttonLeft + buttonWidth
+
+buttonBottom :: Int
+buttonBottom = 150
+
+buttonTop :: Int
+buttonTop = buttonBottom + buttonHeight
+
+buttonWidth :: Int
+buttonWidth = 200
+
+buttonHeight :: Int
+buttonHeight = 100
