@@ -1,51 +1,40 @@
 module GameLogic where
 
 import System.Random
-import Graphics.Gloss.Interface.Pure.Game
+import GameData
+import Constants
 
--- For turn:
---     1 = player 1's turn
---     2 = player 2's turn
--- For gameOver:
---     0 = game continues
---     1 = player 1 wins
---     2 = player 2 wins
-data GameState = GameState {
-    turn::Int,
-    player1::Int,
-    player2::Int,
-    gameOver::Int
-} deriving(Show, Eq)
-
--- For obstacles 1 means ladder, 2 means snakes
-data Obstacle = Obstacle {
-    exist::Bool,
-    direction::Int,
-    startPos::Int,
-    endPos::Int
-} deriving (Eq, Show)
-
-
-obstacleList :: [Obstacle]
-obstacleList = [Obstacle False 1 2 38]
-
-
-initialGameState :: GameState
-initialGameState = GameState {turn = 1, player1 = 0, player2 = 0, gameOver = 0}
-
-playerAction :: GameState -> IO GameState
-playerAction (GameState {turn = t, player1 = p1, player2 = p2, gameOver = o}) = do
-    let gen = mkStdGen 42
+playerAction :: PlayerState -> IO PlayerState
+playerAction (PlayerState {turn = t, player1 = p1, player2 = p2}) = do
     rollDice <- randomRIO (1, 6)
     if t == 1
         then if (p1 + rollDice) >= 100
-            then return GameState{turn = 2, player1 = 100, player2 = p2, gameOver = -1}
-            else return GameState{turn = 2, player1 = p1 + rollDice, player2 = p2, gameOver = 0}
+            then return PlayerState{turn = 2, player1 = 100, player2 = p2}
+            else return PlayerState{turn = 2, player1 = p1 + rollDice, player2 = p2}
         else if t == 2
             then if (p2 + rollDice) >= 100
-                then return GameState{turn = 1, player1 = p1, player2 = 100, gameOver = 1}
-                else return GameState{turn = 1, player1 = p1, player2 = p2 + rollDice, gameOver = 1}
-            else return GameState{turn = t, player1 = p1, player2 = p2, gameOver = o}
-    
+                then return PlayerState{turn = 1, player1 = p1, player2 = 100}
+                else return PlayerState{turn = 1, player1 = p1, player2 = p2 + rollDice}
+            else return PlayerState{turn = t, player1 = p1, player2 = p2}
 
+--Updates the gamestate based on the player's state
+updateGameState :: PlayerState -> GameState -> GameState
+updateGameState (PlayerState {turn = t, player1 = p1, player2 = p2}) (GameState {grid = g, gameOver = o}) = 
+    let p1x = div p1 10
+        p1y = mod p1 10
+        p2x = div p2 10
+        p2y = mod p2 10
+        grid = replicate gridSize $ replicate gridSize (False, False)
+        updatedGrid = [[if (x, y) == (p1x, p1y) && (x, y) == (p2x, p2y) then (True, True)
+                        else 
+                            if (x, y) == (p2x, p2y) then (False, True)
+                        else 
+                            if (x, y) == (p1x, p1y) then (True, False)
+                        else (False, False)
+                        | y <- [0..gridSize-1]]
+                        | x <- [0..gridSize-1]]
+        gameOver1 = if p1 == 100 then 1 else o
+        gameOver2 = if p2 == 100 then 2 else o
+        gameOver' = max gameOver1 gameOver2
+    in GameState{grid = updatedGrid, gameOver = gameOver'}
 
