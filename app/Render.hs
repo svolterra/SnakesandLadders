@@ -5,15 +5,14 @@ import Constants
 import GameData
 
 -- Change the grid color based on the game state
-updateGridState :: [[(Bool, Bool)]] -> Picture
-updateGridState grid
-  | currentState == (True, True) = color red $ rectangleFilled
-  | currentState == (True, False) = color green $ rectangleFilled
-  | currentState == (False, True) = color blue $ rectangleFilled
-  | currentState == (False, False) = color black $ rectangleOutline
+updateGridState :: (Bool, Bool) -> Picture
+updateGridState cell
+  | cell == (True, True) = color red $ rectangleFilled
+  | cell == (True, False) = color green $ rectangleFilled
+  | cell == (False, True) = color blue $ rectangleFilled
+  | cell == (False, False) = color black $ rectangleOutline
   | otherwise = color red rectangleOutline
   where 
-    currentState = head(head grid)
     rectangleFilled = rectangleSolid cellWidth cellWidth
     rectangleOutline = rectangleWire cellWidth cellWidth
 
@@ -23,7 +22,7 @@ gridPicture state = pictures
   [ -- Draw the grid
     translate (-100) (-250 + 25) $ pictures
       [ translate (fromIntegral x * cellWidth) (fromIntegral y * cellWidth) $
-            updateGridState currentState
+            updateGridState (currentState !! y !! x)
           , rectangleWire cellWidth cellWidth
           , translate ((-cellWidth/2) + 50 * fromIntegral x) (10 + 50 * fromIntegral y) $ scale 0.1 0.1 $ text (show (y * gridSize + x + 1)) 
       ]
@@ -31,7 +30,6 @@ gridPicture state = pictures
   ] 
   where
       currentState = grid state
-      currentHead = head(head currentState)
 
 -- Define the roll button picture
 buttonPicture :: Picture
