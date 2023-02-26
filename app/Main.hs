@@ -7,18 +7,6 @@ import Data.List
 import Constants
 import GHC.IO
 
--- Define the grid size 
-gridSize :: Int
-gridSize = 10
-
--- Define the grid cell width
-cellWidth :: Float
-cellWidth = 50
-
--- Define button colour
-buttonColor :: Color
-buttonColor = makeColor 0.255 0.91 0.99 1
-
 -- Define the game state data type
 -- grid stores pairs of Booleans representing each player's presence at a certain cell
 -- gameOver is 1 if the game is over or 0 if the game continues
