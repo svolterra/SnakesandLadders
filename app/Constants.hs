@@ -29,7 +29,7 @@ startY :: Int
 startY  = 20
 
 buttonLeft :: Int
-buttonLeft = -250 
+buttonLeft = -335
 
 buttonRight :: Int
 buttonRight = buttonLeft + buttonWidth
@@ -48,4 +48,7 @@ buttonHeight = 100
 
 -- Define button colour
 buttonColor :: Color
-buttonColor = makeColor 0.255 0.91 0.99 1
+buttonColor = green
+
+buttonText :: String
+buttonText = "Press to Roll"
