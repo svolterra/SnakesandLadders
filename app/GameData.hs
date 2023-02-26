@@ -24,4 +24,4 @@ initialGameState = (
     GameState {
     grid = replicate gridSize $ replicate gridSize (False, False),
     gameOver = 0
-    })
+})

@@ -1,6 +1,6 @@
 module Render where
-
 import Graphics.Gloss
+import Constants
 import GameData
 
 -- Change the grid color based on the game state
@@ -63,7 +63,7 @@ rollResult = Pictures [
      result = "2" -- TODO: to be changed to dice result (if possible)
 
 -- Render the gameboard's components
-ender :: (PlayerState, GameState) -> Picture
+render :: (PlayerState, GameState) -> Picture
 render (playerState, gameState) = Pictures [grid, button, result, text]
     where
         grid = gridPicture gameState
