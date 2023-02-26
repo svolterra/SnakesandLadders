@@ -16,12 +16,3 @@ data PlayerState = PlayerState {
     player1 :: Int,
     player2 :: Int
 }
-
--- Define the initial game state
-initialGameState :: (PlayerState, GameState)
-initialGameState = (
-    (PlayerState {turn = 1, player1 = 0, player2 = 0}),
-    GameState {
-    grid = replicate gridSize $ replicate gridSize (False, False),
-    gameOver = 0
-})

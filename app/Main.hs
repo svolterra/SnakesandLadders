@@ -10,6 +10,15 @@ import GHC.IO
 import GameData
 import Render
 
+-- Define the initial game state
+initialGameState :: (PlayerState, GameState)
+initialGameState = (
+    (PlayerState {turn = 1, player1 = 0, player2 = 0}),
+    GameState {
+    grid = replicate gridSize $ replicate gridSize (True, True),
+    gameOver = 0
+})
+
 handleEvent :: Event -> (PlayerState, GameState) -> (PlayerState, GameState)
 handleEvent (EventKey (MouseButton LeftButton) Down _ (x, y)) (playerState, gameState)
   | buttonClicked (round x, round y) = (playerState', gameState')
