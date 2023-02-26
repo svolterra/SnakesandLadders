@@ -8,11 +8,20 @@ import Constants
 data GameState = GameState {
     grid :: [[(Bool, Bool)]],
     gameOver::Int
-}
+} deriving (Eq, Show)
 
 -- Define the player state data type 
 data PlayerState = PlayerState {
     turn :: Int,
     player1 :: Int,
     player2 :: Int
-}
+} deriving (Eq, Show)
+
+-- Define the initial game state
+initialGameState :: (PlayerState, GameState)
+initialGameState = (
+    (PlayerState {turn = 1, player1 = 0, player2 = 0}),
+    GameState {
+    grid = replicate gridSize $ replicate gridSize (False, False),
+    gameOver = 0
+})

@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Redundant if" #-}
 module Main where
 
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
@@ -9,15 +11,7 @@ import Constants
 import GHC.IO
 import GameData
 import Render
-
--- Define the initial game state
-initialGameState :: (PlayerState, GameState)
-initialGameState = (
-    (PlayerState {turn = 1, player1 = 0, player2 = 0}),
-    GameState {
-    grid = replicate gridSize $ replicate gridSize (True, True),
-    gameOver = 0
-})
+import Debug.Trace
 
 handleEvent :: Event -> (PlayerState, GameState) -> (PlayerState, GameState)
 handleEvent (EventKey (MouseButton LeftButton) Down _ (x, y)) (playerState, gameState)
@@ -60,7 +54,7 @@ updateGameState (PlayerState {turn = t, player1 = p1, player2 = p2}) (GameState 
                         | y <- [0..gridSize-1]]
                         | x <- [0..gridSize-1]]
         gameOver1 = if p1 == 100 then 1 else o
-        gameOver2 = if p2 == 100 then 1 else o
+        gameOver2 = if p2 == 100 then 2 else o
         gameOver' = max gameOver1 gameOver2
     in GameState{grid = updatedGrid, gameOver = gameOver'}
 
