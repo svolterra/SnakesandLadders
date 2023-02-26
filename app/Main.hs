@@ -1,7 +1,6 @@
-module Main(main) where
+module Main where
 
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
-{-# HLINT ignore "Redundant if" #-}
 import Graphics.Gloss
 import Graphics.Gloss.Interface.IO.Game
 import System.Random ( randomRIO )

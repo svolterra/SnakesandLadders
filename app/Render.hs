@@ -1,4 +1,5 @@
 module Render where
+
 import Graphics.Gloss
 import Constants
 import GameData
