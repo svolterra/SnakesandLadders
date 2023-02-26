@@ -16,26 +16,14 @@ gridSize = 10
 cellWidth :: Float
 cellWidth = 50
 
-offsetX :: Int
-offsetX = 20
-
-offsetY :: Int
-offsetY = 20
-
-startX :: Int
-startX  = 20
-
-startY :: Int
-startY  = 20
-
 buttonLeft :: Int
-buttonLeft = -335
+buttonLeft = -350
 
 buttonRight :: Int
 buttonRight = buttonLeft + buttonWidth
 
 buttonBottom :: Int
-buttonBottom = 150
+buttonBottom = 100
 
 buttonTop :: Int
 buttonTop = buttonBottom + buttonHeight
