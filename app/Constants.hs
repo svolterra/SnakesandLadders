@@ -16,17 +16,31 @@ gridSize = 10
 cellWidth :: Float
 cellWidth = 50
 
-buttonLeft :: Int
-buttonLeft = -350
+--RollButton
+rollButtonLeft :: Int
+rollButtonLeft = -350
 
-buttonRight :: Int
-buttonRight = buttonLeft + buttonWidth
+rollButtonRight :: Int
+rollButtonRight = rollButtonLeft + buttonWidth
 
-buttonBottom :: Int
-buttonBottom = 100
+rollButtonBottom :: Int
+rollButtonBottom = 100
 
-buttonTop :: Int
-buttonTop = buttonBottom + buttonHeight
+rollButtonTop :: Int
+rollButtonTop = rollButtonBottom + buttonHeight
+
+--ResetButton
+resetButtonLeft :: Int
+resetButtonLeft = -350
+
+resetButtonRight :: Int
+resetButtonRight = resetButtonLeft + buttonWidth
+
+resetButtonBottom :: Int
+resetButtonBottom = -75
+
+resetButtonTop :: Int
+resetButtonTop = resetButtonBottom + buttonHeight
 
 buttonWidth :: Int
 buttonWidth = 200

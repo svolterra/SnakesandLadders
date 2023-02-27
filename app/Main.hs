@@ -16,14 +16,16 @@ import GameLogic
 handleEvent :: Event -> (PlayerState, GameState) -> (PlayerState, GameState)
 handleEvent (EventKey (MouseButton LeftButton) Down _ (x, y)) (playerState, gameState)
   | buttonClickedRoll (round x, round y) = (playerState', gameState')
-  -- | buttonClickedReset (round x, round y) = resetTuple
+  | buttonClickedReset (round x, round y) = resetTuple
   | otherwise = (playerState, gameState)
   where 
     playerState' = unsafePerformIO $ playerAction playerState
     gameState' = updateGameState playerState' gameState
     resetTuple = initialGameState
-    buttonClickedRoll (x', y') = x' > left && x' < right && y' > bottom && y' < top
-    (left, right, bottom, top) = (buttonLeft, buttonRight, buttonBottom, buttonTop)
+    buttonClickedRoll (x', y') = x' > rollLeft && x' < rollRight && y' > rollBottom && y' < rollTop
+    (rollLeft, rollRight, rollBottom, rollTop) = (rollButtonLeft, rollButtonRight, rollButtonBottom, rollButtonTop)
+    buttonClickedReset (x', y') = x' > resetLeft && x' < resetRight && y' > resetBottom && y' < resetop
+    (resetLeft, resetRight, resetBottom, resetop) = (resetButtonLeft, resetButtonRight, resetButtonBottom, resetButtonTop)
 handleEvent _ (playerState, gameState) = (playerState, gameState)
 
 -- Define the update function

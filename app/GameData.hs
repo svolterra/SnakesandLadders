@@ -24,8 +24,10 @@ data PlayerState = PlayerState {
 -- The key is the start of the snake / ladder
 -- The Value is the exit
 -- RULE: Only assign one value per key
+-- NOTE: The assigned values for each will be kind of weird, because the list starts at 0, all
+--      values will be shifted to the right by 1, keep that in mind
 obstacleList :: [(Int, Int)]
-obstacleList = [(2, 10), (15, 20), (36, 48), (72, 88), (25, 10), (42, 30), (72, 40), (99, 12)]
+obstacleList = [(2, 9), (15, 19), (36, 48), (72, 88), (25, 10), (42, 30), (72, 40), (98, 12)]
 
 -- Initialize the map that has nothing there
 obstacleDict :: Map.Map Int Int
