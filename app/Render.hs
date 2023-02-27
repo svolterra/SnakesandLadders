@@ -21,8 +21,8 @@ addObstacles :: (Int, Int) -> Picture
 addObstacles (x, y) =
   case Map.lookup coordsToInt obstacleDict of
     Just exit -> if coordsToInt < exit
-                    then color green $ translate  (8 + 50 * fromIntegral x) (10 + 50 * fromIntegral y) $ scale 0.1 0.1 $ text (show exit)
-                    else color red $ translate  (8 + 50 * fromIntegral x) (10 + 50 * fromIntegral y) $ scale 0.1 0.1 $ text (show exit)
+                    then color green $ translate  (8 + 50 * fromIntegral x) (10 + 50 * fromIntegral y) $ scale 0.1 0.1 $ text (show (exit + 1))
+                    else color red $ translate  (8 + 50 * fromIntegral x) (10 + 50 * fromIntegral y) $ scale 0.1 0.1 $ text (show (exit + 1))
     Nothing -> Blank
   where
     coordsToInt = (y* 10 + x)
@@ -56,12 +56,11 @@ buttonPicture = Pictures [
 -- Define the reset button picture
 resetButtonPicture :: Picture
 resetButtonPicture = Pictures [
-    Translate (-250) -50 $ color buttonColor $ rectangleSolid 200 100,
-    Translate (-250) -50 $ color blue $ rectangleWire 200 100,
-    Translate (-335) -35 $ Scale 0.2 0.2 $ Text buttonText
+    Translate (-250) (-25) $ color blue $ rectangleWire 200 100,
+    Translate (-285) (-35) $ Scale 0.2 0.2 $ Text buttonText
     ]
     where
-        buttonText = "Press to Reset Game"
+        buttonText = "Reset"
 
 
 -- dicePicture :: Picture
