@@ -1,5 +1,9 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Redundant if" #-}
 module GameLogic where
 
+import Data.Maybe
+import qualified Data.Map as Map
 import System.Random
 import GameData
 import Constants
@@ -10,11 +14,15 @@ playerAction (PlayerState {turn = t, player1 = p1, player2 = p2}) = do
     if t == 1
         then if (p1 + rollDice) >= 100
             then return PlayerState{turn = 2, player1 = 100, player2 = p2}
-            else return PlayerState{turn = 2, player1 = p1 + rollDice, player2 = p2}
+                else case Map.lookup (p1 + rollDice) obstacleDict of
+                    Just exit -> return PlayerState{turn = 2, player1 = (fromMaybe (p1 + rollDice) (Map.lookup (p1 + rollDice) obstacleDict)), player2 = p2}
+                    Nothing -> return PlayerState{turn = 2, player1 = p1 + rollDice, player2 = p2}
         else if t == 2
             then if (p2 + rollDice) >= 100
                 then return PlayerState{turn = 1, player1 = p1, player2 = 100}
-                else return PlayerState{turn = 1, player1 = p1, player2 = p2 + rollDice}
+                else case Map.lookup (p2 + rollDice) obstacleDict of
+                    Just exit -> return PlayerState{turn = 1, player1 = p1, player2 = (fromMaybe (p2 + rollDice) (Map.lookup (p2 + rollDice) obstacleDict))}
+                    Nothing -> return PlayerState{turn = 1, player1 = p1, player2 = p2 + rollDice}
             else return PlayerState{turn = t, player1 = p1, player2 = p2}
 
 --Updates the gamestate based on the player's state
@@ -37,4 +45,3 @@ updateGameState (PlayerState {turn = t, player1 = p1, player2 = p2}) (GameState 
         gameOver2 = if p2 == 100 then 2 else o
         gameOver' = max gameOver1 gameOver2
     in GameState{grid = updatedGrid, gameOver = gameOver'}
-
