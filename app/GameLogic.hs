@@ -6,8 +6,9 @@ import System.Random
 import GameData
 import Constants
 
-playerAction :: PlayerState -> IO PlayerState
-playerAction (PlayerState {turn = t, player1 = p1, player2 = p2, diceRoll = d}) = do
+-- Update the state of the player based on the number rolled by the dice
+updatePlayerState :: PlayerState -> IO PlayerState
+updatePlayerState (PlayerState {turn = t, player1 = p1, player2 = p2, diceRoll = d}) = do
     d <- randomRIO (1, 6)
     if t == 1
         then if (p1 + d) >= 100
@@ -23,7 +24,7 @@ playerAction (PlayerState {turn = t, player1 = p1, player2 = p2, diceRoll = d}) 
                     Nothing -> return PlayerState{turn = 1, player1 = p1, player2 = p2 + d, diceRoll = d}
             else return PlayerState{turn = t, player1 = p1, player2 = p2, diceRoll = d}
 
---Updates the gamestate based on the player's state
+-- Updates the state of the game based on the player states
 updateGameState :: PlayerState -> GameState -> GameState
 updateGameState (PlayerState {turn = t, player1 = p1, player2 = p2}) (GameState {grid = g, gameOver = o}) =
     let p1x = div p1 10

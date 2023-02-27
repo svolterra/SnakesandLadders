@@ -30,7 +30,7 @@ data PlayerState = PlayerState {
 obstacleList :: [(Int, Int)]
 obstacleList = [(2, 9), (15, 19), (36, 48), (72, 88), (25, 10), (42, 30), (72, 40), (98, 12)]
 
--- Initialize the map that has nothing there
+-- Initialize the map of obstacles that has nothing there
 obstacleDict :: Map.Map Int Int
 obstacleDict = Map.fromList obstacleList
 
