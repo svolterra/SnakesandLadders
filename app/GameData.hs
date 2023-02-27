@@ -1,5 +1,4 @@
 module GameData where
-
 import qualified Data.Map as Map
 import Constants
 import qualified Control.Applicative as Map
@@ -14,7 +13,7 @@ data GameState = GameState {
     gameOver::Int
 } deriving (Eq, Show)
 
--- Define the player state data type 
+-- Define the player state data type
 data PlayerState = PlayerState {
     turn :: Int,
     player1 :: Int,
@@ -24,6 +23,7 @@ data PlayerState = PlayerState {
 -- Insert stuff into the map
 -- The key is the start of the snake / ladder
 -- The Value is the exit
+-- RULE: Only assign one value per key
 obstacleList :: [(Int, Int)]
 obstacleList = [(2, 10), (15, 20), (36, 48), (72, 88), (25, 10), (42, 30), (72, 40), (99, 12)]
 

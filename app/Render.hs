@@ -1,5 +1,6 @@
 module Render where
 
+import qualified Data.Map as Map
 import Graphics.Gloss
 import Constants
 import GameData
@@ -16,6 +17,16 @@ updateGridState cell
     rectangleFilled = rectangleSolid cellWidth cellWidth
     rectangleOutline = rectangleWire cellWidth cellWidth
 
+addObstacles :: (Int, Int) -> Picture
+addObstacles (x, y) =
+  case Map.lookup coordsToInt obstacleDict of
+    Just exit -> if coordsToInt < exit
+                    then color green $ translate  (8 + 50 * fromIntegral x) (10 + 50 * fromIntegral y) $ scale 0.1 0.1 $ text (show exit)
+                    else color red $ translate  (8 + 50 * fromIntegral x) (10 + 50 * fromIntegral y) $ scale 0.1 0.1 $ text (show exit)
+    Nothing -> Blank
+  where
+    coordsToInt = (y* 10 + x)
+
 -- Define the rendering function
 gridPicture :: GameState -> Picture
 gridPicture state = pictures
@@ -23,6 +34,7 @@ gridPicture state = pictures
     translate (-100) (-250 + 25) $ pictures
       [ translate (fromIntegral x * cellWidth) (fromIntegral y * cellWidth) $
             updateGridState (currentState !! y !! x)
+          , addObstacles (x, y)
           , rectangleWire cellWidth cellWidth
           , translate ((-cellWidth/2) + 50 * fromIntegral x) (10 + 50 * fromIntegral y) $ scale 0.1 0.1 $ text (show (y * gridSize + x + 1)) 
       ]
@@ -40,6 +52,17 @@ buttonPicture = Pictures [
     ]
     where
         buttonText = "Press to Roll"
+
+-- Define the reset button picture
+resetButtonPicture :: Picture
+resetButtonPicture = Pictures [
+    Translate (-250) -50 $ color buttonColor $ rectangleSolid 200 100,
+    Translate (-250) -50 $ color blue $ rectangleWire 200 100,
+    Translate (-335) -35 $ Scale 0.2 0.2 $ Text buttonText
+    ]
+    where
+        buttonText = "Press to Reset Game"
+
 
 -- dicePicture :: Picture
 -- dicePicture = Pictures [
@@ -66,9 +89,10 @@ rollResult = Pictures [
 
 -- Render the gameboard's components
 render :: (PlayerState, GameState) -> Picture
-render (playerState, gameState) = Pictures [grid, button, result, text]
+render (playerState, gameState) = Pictures [grid, rollButton, resetButton, result, text]
     where
         grid = gridPicture gameState
-        button = buttonPicture
+        rollButton = buttonPicture
+        resetButton = resetButtonPicture
         result = rollResult
         text = resultText
