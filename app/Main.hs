@@ -2,7 +2,6 @@
 {-# HLINT ignore "Redundant if" #-}
 module Main where
 
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 import Graphics.Gloss
 import Graphics.Gloss.Interface.IO.Game
 import System.Random ( randomRIO )
@@ -16,12 +15,14 @@ import GameLogic
 
 handleEvent :: Event -> (PlayerState, GameState) -> (PlayerState, GameState)
 handleEvent (EventKey (MouseButton LeftButton) Down _ (x, y)) (playerState, gameState)
-  | buttonClicked (round x, round y) = (playerState', gameState')
+  | buttonClickedRoll (round x, round y) = (playerState', gameState')
+  -- | buttonClickedReset (round x, round y) = resetTuple
   | otherwise = (playerState, gameState)
   where 
     playerState' = unsafePerformIO $ playerAction playerState
     gameState' = updateGameState playerState' gameState
-    buttonClicked (x', y') = x' > left && x' < right && y' > bottom && y' < top
+    resetTuple = initialGameState
+    buttonClickedRoll (x', y') = x' > left && x' < right && y' > bottom && y' < top
     (left, right, bottom, top) = (buttonLeft, buttonRight, buttonBottom, buttonTop)
 handleEvent _ (playerState, gameState) = (playerState, gameState)
 
