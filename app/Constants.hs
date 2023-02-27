@@ -1,6 +1,7 @@
 module Constants where
 
 import Graphics.Gloss
+import Graphics.Gloss.Data.Color
 
 -- Define the screen width of the game window
 screenWidth :: Int 
@@ -10,6 +11,10 @@ screenWidth = 800
 screenHeight :: Int
 screenHeight = 550
 
+-- Define the background color of the game window screen 
+screenBackgroundColor :: Color
+screenBackgroundColor = makeColorI 250 240 230 0
+
 -- Define the grid size 
 gridSize :: Int
 gridSize = 10
@@ -18,9 +23,6 @@ gridSize = 10
 cellWidth :: Float
 cellWidth = 50
 
---RollButton
-rollButtonLeft :: Int
-rollButtonLeft = -350
 -- Define solid-color rectangles
 filledSquare :: Picture
 filledSquare = rectangleSolid cellWidth cellWidth
@@ -29,45 +31,72 @@ filledSquare = rectangleSolid cellWidth cellWidth
 outlinedSquare :: Picture 
 outlinedSquare = rectangleWire cellWidth cellWidth
 
-buttonLeft :: Int
-buttonLeft = -350
+-- RollButton
+rollButtonWidth :: Int
+rollButtonWidth = 200
+
+rollButtonHeight :: Int
+rollButtonHeight = 100
+
+rollButtonLeft :: Int
+rollButtonLeft = -350
 
 rollButtonRight :: Int
-rollButtonRight = rollButtonLeft + buttonWidth
+rollButtonRight = rollButtonLeft + rollButtonWidth
 
 rollButtonBottom :: Int
 rollButtonBottom = 100
 
 rollButtonTop :: Int
-rollButtonTop = rollButtonBottom + buttonHeight
+rollButtonTop = rollButtonBottom + rollButtonHeight
+
+-- The text displayed in the roll button
+rollButtonText :: String
+rollButtonText = "Press to Roll"
 
 --ResetButton
+resetButtonWidth :: Int
+resetButtonWidth = 100
+
+resetButtonHeight :: Int
+resetButtonHeight = 50
+
 resetButtonLeft :: Int
-resetButtonLeft = -350
+resetButtonLeft = -300
 
 resetButtonRight :: Int
-resetButtonRight = resetButtonLeft + buttonWidth
+resetButtonRight = resetButtonLeft + resetButtonWidth
 
 resetButtonBottom :: Int
-resetButtonBottom = -75
+resetButtonBottom = 15
 
 resetButtonTop :: Int
-resetButtonTop = resetButtonBottom + buttonHeight
+resetButtonTop = resetButtonBottom + resetButtonHeight
 
-buttonWidth :: Int
-buttonWidth = 200
+-- The text displayed in the reset button
+resetButtonText :: String
+resetButtonText = "Reset"
 
-buttonHeight :: Int
-buttonHeight = 100
+-- The color of the reset button
+resetButtonColor :: Color
+resetButtonColor = light(light (dim red))
 
-buttonText :: String
-buttonText = "Press to Roll"
+-- Color representing ladders on the board
+laddersColor :: Color
+laddersColor = dark(dark yellow)
 
-backgroundColor :: Color
-backgroundColor = white
+-- Color representing snakes on the board
+snakesColor :: Color
+snakesColor = dark red
 
+-- Color representing player one
 playerOneColor :: Color
-playerOneColor = green
+playerOneColor = dark green
 
+-- Color representing player two
 playerTwoColor :: Color
-playerTwoColor = blue
+playerTwoColor = dark cyan
+
+-- Define a light black color for the grid
+lightBlack :: Color
+lightBlack = light(light black)
