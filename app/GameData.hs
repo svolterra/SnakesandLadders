@@ -10,14 +10,15 @@ import qualified Control.Applicative as Map
 --          or 0 if the game continues
 data GameState = GameState {
     grid :: [[(Bool, Bool)]],
-    gameOver::Int
+    gameOver :: Int
 } deriving (Eq, Show)
 
 -- Define the player state data type
 data PlayerState = PlayerState {
     turn :: Int,
     player1 :: Int,
-    player2 :: Int
+    player2 :: Int,
+    diceRoll :: Int
 } deriving (Eq, Show)
 
 -- Insert stuff into the map
@@ -36,7 +37,7 @@ obstacleDict = Map.fromList obstacleList
 -- Define the initial game state
 initialGameState :: (PlayerState, GameState)
 initialGameState = (
-    (PlayerState {turn = 1, player1 = 0, player2 = 0}),
+    (PlayerState {turn = 1, player1 = 0, player2 = 0, diceRoll = 0}),
     GameState {
     grid = replicate gridSize $ replicate gridSize (False, False),
     gameOver = 0

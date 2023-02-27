@@ -2,9 +2,11 @@ module Constants where
 
 import Graphics.Gloss
 
+-- Define the screen width of the game window
 screenWidth :: Int 
 screenWidth = 800
 
+-- Define the screen height of the game window
 screenHeight :: Int
 screenHeight = 550
 
@@ -19,6 +21,16 @@ cellWidth = 50
 --RollButton
 rollButtonLeft :: Int
 rollButtonLeft = -350
+-- Define solid-color rectangles
+filledSquare :: Picture
+filledSquare = rectangleSolid cellWidth cellWidth
+
+-- Define outline-only rectangles
+outlinedSquare :: Picture 
+outlinedSquare = rectangleWire cellWidth cellWidth
+
+buttonLeft :: Int
+buttonLeft = -350
 
 rollButtonRight :: Int
 rollButtonRight = rollButtonLeft + buttonWidth
@@ -48,9 +60,14 @@ buttonWidth = 200
 buttonHeight :: Int
 buttonHeight = 100
 
--- Define button colour
-buttonColor :: Color
-buttonColor = green
-
 buttonText :: String
 buttonText = "Press to Roll"
+
+backgroundColor :: Color
+backgroundColor = white
+
+playerOneColor :: Color
+playerOneColor = green
+
+playerTwoColor :: Color
+playerTwoColor = blue
