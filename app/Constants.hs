@@ -100,3 +100,12 @@ playerTwoColor = dark cyan
 -- Define a light black color for the grid
 lightBlack :: Color
 lightBlack = light(light black)
+
+-- Insert stuff into the map
+-- The key is the start of the snake / ladder
+-- The Value is the exit
+-- RULE: Only assign one value per key
+-- NOTE: The assigned values for each will be kind of weird, because the list starts at 0, all
+--      values will be shifted to the right by 1, keep that in mind
+obstacleList :: [(Int, Int)]
+obstacleList = [(1, 10), (9, 4), (15, 25), (21, 11), (27, 45), (34, 20), (41, 61), (51, 31), (57, 77), (68, 55), (73, 93), (88, 95), (99, 16)]
